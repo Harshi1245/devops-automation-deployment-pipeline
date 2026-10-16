@@ -1,5 +1,15 @@
+
 stages:
+  - lint
   - test
+
+lint_app:
+  stage: lint
+  image: python:3.12-slim
+  before_script:
+    - pip install --no-cache-dir -r requirements.txt
+  script:
+    - python -m flake8 app.py test_app.py
 
 test_app:
   stage: test
