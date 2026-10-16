@@ -16,7 +16,7 @@ def home():
 def health():
     return jsonify({
         "status": "healthy",
-        "version": "1.1"
+        "version": "1.2"
     }), 200
 
 
