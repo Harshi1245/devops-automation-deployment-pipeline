@@ -137,3 +137,43 @@ GitLab: https://gitlab.com/devangamharshitha14
 ---
 
 This project is developed for hands-on learning and demonstration of DevOps fundamentals.
+
+
+## Docker Image Versioning and Rollback
+
+Build version 1.0:
+
+```bat
+docker build -t devops-automation:1.0 .
+```
+
+Build version 1.1:
+
+```bat
+docker build -t devops-automation:1.1 .
+```
+
+Run version 1.0 on port 8082:
+
+```bat
+docker run -d --name devops-v1 -p 8082:5000 devops-automation:1.0
+```
+
+Run version 1.1 on port 8083:
+
+```bat
+docker run -d --name devops-v1-1 -p 8083:5000 devops-automation:1.1
+```
+
+Verify running containers:
+
+```bat
+docker ps
+```
+
+Test health endpoints:
+
+- Version 1.0: `http://localhost:8082/health`
+- Version 1.1: `http://localhost:8083/health`
+
+Keep a previously tested image available so it can be used to restore an earlier version if a newer release has problems.

@@ -17,4 +17,4 @@ test_app:
   before_script:
     - pip install --no-cache-dir -r requirements.txt
   script:
-    - python -m pytest --cov=app --cov-report=term-missing -v
+    - python -m pytest --cov=app --cov-report=term-missing --cov-fail-under=80 -v
