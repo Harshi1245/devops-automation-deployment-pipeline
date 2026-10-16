@@ -1,93 +1,139 @@
-# devops-automation-deployment-pipeline
+# DevOps Automation and Deployment Pipeline
 
+A containerized Python Flask application demonstrating automated testing, Docker containerization, health monitoring, and GitLab CI/CD configuration.
 
+## Project Overview
 
-## Getting started
+This project demonstrates how to package a Python web application using Docker, run it with Docker Compose, verify its functionality with automated tests, and configure a GitLab CI/CD pipeline.
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Features
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- REST API built with Python and Flask
+- Automated unit tests using pytest
+- Docker image creation using a Dockerfile
+- Container orchestration using Docker Compose
+- Docker health checks for application monitoring
+- `.dockerignore` to exclude unnecessary files from the build context
+- GitLab CI/CD pipeline configuration
 
-## Add your files
+## Tech Stack
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+- **Language:** Python
+- **Web Framework:** Flask
+- **Testing:** pytest
+- **Containerization:** Docker
+- **Container Orchestration:** Docker Compose
+- **CI/CD Configuration:** GitLab CI/CD
+- **Version Control:** Git and GitLab
 
+## Project Structure
+
+```text
+devops-automation-deployment-pipeline/
+├── app.py
+├── test_app.py
+├── requirements.txt
+├── Dockerfile
+├── compose.yaml
+├── .dockerignore
+├── .gitignore
+├── .gitlab-ci.yml
+└── README.md
 ```
-cd existing_repo
-git remote add origin https://gitlab.com/devangamharshitha14/devops-automation-deployment-pipeline.git
-git branch -M main
-git push -uf origin main
+
+## Prerequisites
+
+Install the following tools:
+
+- Python 3.12 or a compatible Python version
+- Git
+- Docker Desktop with Docker Compose
+
+## Run the Project Locally
+
+### 1. Clone the repository
+
+```bash
+git clone https://gitlab.com/devangamharshitha14/devops-automation-deployment-pipeline.git
+cd devops-automation-deployment-pipeline
 ```
 
-## Integrate with your tools
+### 2. Install dependencies
 
-* [Set up project integrations](https://gitlab.com/devangamharshitha14/devops-automation-deployment-pipeline/-/settings/integrations)
+```bash
+python -m pip install -r requirements.txt
+```
 
-## Collaborate with your team
+### 3. Run automated tests
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+```bash
+python -m pytest -v
+```
 
-## Test and Deploy
+The current test suite contains two tests covering the home endpoint and health endpoint. Both tests have passed locally.
 
-Use the built-in continuous integration in GitLab.
+### 4. Start the Docker application
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+```bash
+docker compose up -d --build
+```
 
-***
+### 5. Check container status
 
-# Editing this README
+```bash
+docker compose ps
+```
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+### 6. Stop the application
 
-## Suggestions for a good README
+```bash
+docker compose down
+```
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+## API Endpoints
 
-## Name
-Choose a self-explaining name for your project.
+| Endpoint | Description |
+|---|---|
+| `/` | Returns project information and application status |
+| `/health` | Returns the application health status |
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+When running through the supplied Docker Compose configuration, the application is available on port `8081`.
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+- Home endpoint: http://localhost:8081/
+- Health endpoint: http://localhost:8081/health
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Expected health response:
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+```json
+{
+  "status": "healthy"
+}
+```
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+## Docker Health Monitoring
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+The Dockerfile defines a health check that periodically sends a request to the application's `/health` endpoint. Docker reports the container as healthy when the check succeeds.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+## GitLab CI/CD
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+The `.gitlab-ci.yml` file defines a test stage that installs the Python dependencies and runs pytest.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+**Note:** A successful local test run does not guarantee that the GitLab pipeline has run. Pipeline execution requires GitLab to accept the configuration and provide an eligible runner.
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Future Improvements
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+- Enable a working CI/CD runner and verify pipeline execution
+- Add code quality checks and linting
+- Publish the Docker image to a container registry
+- Add automated deployment to a hosting environment
+- Add application logging and monitoring
 
-## License
-For open source projects, say how it is licensed.
+## Author
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+**Devangam Harshitha**
+
+GitLab: https://gitlab.com/devangamharshitha14
+
+---
+
+This project is developed for hands-on learning and demonstration of DevOps fundamentals.
