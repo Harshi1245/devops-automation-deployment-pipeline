@@ -1,0 +1,7 @@
+services:
+  web:
+    build: .
+    container_name: devops-compose-app
+    ports:
+      - "8081:5000"
+    restart: unless-stopped
